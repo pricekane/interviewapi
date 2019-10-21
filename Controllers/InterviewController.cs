@@ -23,7 +23,7 @@ namespace ReliasInterviewApi.Controllers
         [HttpGet]
         public IEnumerable<Interviewee> Get()
         {
-            return  
+            return null;  
         }
     }
 }
