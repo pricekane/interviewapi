@@ -12,22 +12,40 @@ namespace ReliasInterviewApi.Controllers
 {
     [ApiController]
     [Route("[controller]")]
-    public class IntervieweeController : ControllerBase
+    public class InterviewController : ControllerBase
     {
 
-        private readonly ILogger<IntervieweeController> _logger;
+        private readonly ILogger<InterviewController> _logger;
         private readonly IInterviewService _interviewService;
 
-        public IntervieweeController(ILogger<IntervieweeController> logger, IInterviewService interviewService)
+        public InterviewController(ILogger<InterviewController> logger, IInterviewService interviewService)
         {
             _logger = logger;
             _interviewService = interviewService;
         }
 
-        [HttpGet]
-        public IEnumerable<Interviewee> Get()
+        [HttpGet("candidates")]
+        public IEnumerable<Candidate> GetCandidates()
         {
-            return _interviewService.GetInterviewees();  
+            return _interviewService.GetCandidates();
+        }
+
+        [HttpGet("users")]
+        public IEnumerable<User> GetUsers()
+        {
+            return _interviewService.GetUsers();
+        }
+
+        [HttpGet("questions")]
+        public IEnumerable<Question> GetQuestions()
+        {
+            return _interviewService.GetQuestions();
+        }
+
+        [HttpGet("responses")]
+        public IEnumerable<Response> GetResponses()
+        {
+            return _interviewService.GetResponses();
         }
     }
 }

@@ -19,14 +19,29 @@ namespace ReliasInterviewApi.Services
             _context = context;
         }
 
-        public IEnumerable<Interviewee> GetInterviewees()
+        public IEnumerable<Candidate> GetCandidates()
         {
-            return _context.Interviewees;
+            return _context.Candidates;
+        }
+        public IEnumerable<User> GetUsers()
+        {
+            return _context.Users;
+        }
+        public IEnumerable<Question> GetQuestions()
+        {
+            return _context.Questions;
+        }
+        public IEnumerable<Response> GetResponses()
+        {
+            return _context.Responses;
         }
     }
 
     public interface IInterviewService
     {
-        IEnumerable<Interviewee> GetInterviewees();
+        IEnumerable<Candidate> GetCandidates();
+        IEnumerable<User> GetUsers();
+        IEnumerable<Question> GetQuestions();
+        IEnumerable<Response> GetResponses();
     }
 }
