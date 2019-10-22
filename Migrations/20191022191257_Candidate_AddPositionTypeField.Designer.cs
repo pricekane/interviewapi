@@ -3,15 +3,17 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using ReliasInterviewApi.Data;
 
 namespace ReliasInterviewApi.Migrations
 {
     [DbContext(typeof(Context))]
-    partial class ContextModelSnapshot : ModelSnapshot
+    [Migration("20191022191257_Candidate_AddPositionTypeField")]
+    partial class Candidate_AddPositionTypeField
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -42,48 +44,6 @@ namespace ReliasInterviewApi.Migrations
                     b.HasKey("Id");
 
                     b.ToTable("Candidates");
-                });
-
-            modelBuilder.Entity("ReliasInterviewApi.Models.CandidateTest", b =>
-                {
-                    b.Property<int>("TestId")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int")
-                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
-
-                    b.Property<int?>("CandidateId")
-                        .HasColumnType("int");
-
-                    b.HasKey("TestId");
-
-                    b.HasIndex("CandidateId");
-
-                    b.ToTable("CandidateTests");
-                });
-
-            modelBuilder.Entity("ReliasInterviewApi.Models.CandidateTestQuestion", b =>
-                {
-                    b.Property<int>("TestQuestionsId")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int")
-                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
-
-                    b.Property<string>("Answer")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<int?>("CandidateTestTestId")
-                        .HasColumnType("int");
-
-                    b.Property<int?>("QuestionId")
-                        .HasColumnType("int");
-
-                    b.HasKey("TestQuestionsId");
-
-                    b.HasIndex("CandidateTestTestId");
-
-                    b.HasIndex("QuestionId");
-
-                    b.ToTable("CandidateTestQuestions");
                 });
 
             modelBuilder.Entity("ReliasInterviewApi.Models.Question", b =>
@@ -148,24 +108,6 @@ namespace ReliasInterviewApi.Migrations
                     b.HasKey("UserId");
 
                     b.ToTable("Users");
-                });
-
-            modelBuilder.Entity("ReliasInterviewApi.Models.CandidateTest", b =>
-                {
-                    b.HasOne("ReliasInterviewApi.Models.Candidate", null)
-                        .WithMany("Tests")
-                        .HasForeignKey("CandidateId");
-                });
-
-            modelBuilder.Entity("ReliasInterviewApi.Models.CandidateTestQuestion", b =>
-                {
-                    b.HasOne("ReliasInterviewApi.Models.CandidateTest", null)
-                        .WithMany("TestQuestions")
-                        .HasForeignKey("CandidateTestTestId");
-
-                    b.HasOne("ReliasInterviewApi.Models.Question", "Question")
-                        .WithMany()
-                        .HasForeignKey("QuestionId");
                 });
 #pragma warning restore 612, 618
         }
