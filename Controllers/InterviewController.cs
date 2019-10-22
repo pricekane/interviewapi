@@ -51,7 +51,27 @@ namespace ReliasInterviewApi.Controllers
         [HttpPost("questions")]
         public ActionResult<Question> PostResponse(Question question)
         {
-            return _interviewService.UpdateQuestion(question);
+            var retVal = _interviewService.CreateQuestion(question);
+
+            if (retVal == null)
+            {
+                return BadRequest("Question already exists");
+            }
+
+            return retVal;
+        }
+
+        [HttpPut("questions")]
+        public ActionResult<Question> PutResponse(Question question)
+        {
+            var retVal = _interviewService.UpdateQuestion(question);
+
+            if (retVal == null)
+            {
+                return BadRequest("Question does not exist");
+            }
+
+            return retVal;
         }
     }
 }
