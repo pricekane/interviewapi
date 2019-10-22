@@ -23,6 +23,42 @@ namespace ReliasInterviewApi.Services
         {
             return _context.Candidates;
         }
+
+        public Candidate GetCandidate(int candidateId)
+        {
+            return _context.Candidates.FirstOrDefault(i => i.Id == candidateId);
+        }
+
+        public Candidate CreateCandidate(Candidate candidate)
+        {
+            if (_context.Candidates.Any(i => i.FirstName == candidate.FirstName && i.LastName == candidate.LastName))
+            {
+                return null;
+            }
+
+            candidate.Created = DateTime.UtcNow;
+            _context.Candidates.Add(candidate);
+            _context.SaveChanges();
+            return candidate;
+        }
+
+        public Candidate UpdateCandidate(Candidate candidate)
+        {
+            var existingCandidate = _context.Candidates.FirstOrDefault(i => i.Id == candidate.Id);
+
+            if (existingCandidate == null)
+            {
+                return null;
+            }
+
+            existingCandidate.FirstName = candidate.FirstName;
+            existingCandidate.LastName = candidate.LastName;
+            existingCandidate.PositionType = candidate.PositionType;
+
+            _context.SaveChanges();
+            return existingCandidate;
+        }
+
         public IEnumerable<User> GetUsers()
         {
             return _context.Users;
@@ -30,6 +66,11 @@ namespace ReliasInterviewApi.Services
         public IEnumerable<Question> GetQuestions()
         {
             return _context.Questions;
+        }
+
+        public Question GetQuestion(int questionId)
+        {
+            return _context.Questions.FirstOrDefault(i => i.QuestionId == questionId);
         }
 
         public Question CreateQuestion(Question question)
@@ -72,10 +113,16 @@ namespace ReliasInterviewApi.Services
     public interface IInterviewService
     {
         IEnumerable<Candidate> GetCandidates();
-        IEnumerable<User> GetUsers();
+        Candidate GetCandidate(int candidateId);
+        Candidate CreateCandidate(Candidate candidate);
+        Candidate UpdateCandidate(Candidate candidate);
+
         IEnumerable<Question> GetQuestions();
+        Question GetQuestion(int questionId);
         Question CreateQuestion(Question question);
         Question UpdateQuestion(Question question);
+
+        IEnumerable<User> GetUsers();
         IEnumerable<Response> GetResponses();
     }
 }

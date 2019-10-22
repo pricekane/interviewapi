@@ -1,21 +1,19 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
+﻿using System.ComponentModel.DataAnnotations;
 
 namespace ReliasInterviewApi.Models
 {
     public class Question
     {
+        [Key]
         public int QuestionId { get; set; }
         public string Text { get; set; }
         public Type Type { get; set; }
         public Level Level { get; set; }
         public string? Answer { get; set; }
-        public string  Description { get; set; }
+        public string Description { get; set; }
     }
 }
 
 public enum Type { ShortAnswer, MultipleChoice }
-public enum Level { Junior , Middle, Senior }
+public enum Level { Junior, Middle, Senior }
 

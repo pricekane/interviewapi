@@ -14,6 +14,9 @@ namespace ReliasInterviewApi.Data
         public DbSet<User> Users { get; set; }
         public DbSet<Question> Questions { get; set; }
         public DbSet<Response> Responses { get; set; }
+        public DbSet<CandidateTest> Tests { get; set; }
+        public DbSet<CandidateTestQuestion> TestQuestions { get; set; }
+
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
@@ -21,6 +24,8 @@ namespace ReliasInterviewApi.Data
             modelBuilder.Entity<User>().ToTable("Users");
             modelBuilder.Entity<Question>().ToTable("Questions");
             modelBuilder.Entity<Response>().ToTable("Responses");
+            modelBuilder.Entity<CandidateTest>().ToTable("CandidateTests");
+            modelBuilder.Entity<CandidateTestQuestion>().ToTable("CandidateTestQuestions");
 
         }
     }
