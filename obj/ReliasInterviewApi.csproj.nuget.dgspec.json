@@ -1,23 +1,24 @@
 {
   "format": 1,
   "restore": {
-    "C:\\Users\\kprice\\Documents\\ReliasInterviewApi\\ReliasInterviewApi.csproj": {}
+    "C:\\Users\\price\\Documents\\interviewapi\\ReliasInterviewApi.csproj": {}
   },
   "projects": {
-    "C:\\Users\\kprice\\Documents\\ReliasInterviewApi\\ReliasInterviewApi.csproj": {
+    "C:\\Users\\price\\Documents\\interviewapi\\ReliasInterviewApi.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "C:\\Users\\kprice\\Documents\\ReliasInterviewApi\\ReliasInterviewApi.csproj",
+        "projectUniqueName": "C:\\Users\\price\\Documents\\interviewapi\\ReliasInterviewApi.csproj",
         "projectName": "ReliasInterviewApi",
-        "projectPath": "C:\\Users\\kprice\\Documents\\ReliasInterviewApi\\ReliasInterviewApi.csproj",
-        "packagesPath": "C:\\Users\\kprice\\.nuget\\packages\\",
-        "outputPath": "C:\\Users\\kprice\\Documents\\ReliasInterviewApi\\obj\\",
+        "projectPath": "C:\\Users\\price\\Documents\\interviewapi\\ReliasInterviewApi.csproj",
+        "packagesPath": "C:\\Users\\price\\.nuget\\packages\\",
+        "outputPath": "C:\\Users\\price\\Documents\\interviewapi\\obj\\",
         "projectStyle": "PackageReference",
         "fallbackFolders": [
-          "C:\\Microsoft\\Xamarin\\NuGet\\"
+          "C:\\Microsoft\\Xamarin\\NuGet\\",
+          "c:\\program files\\dotnet\\sdk\\NuGetFallbackFolder"
         ],
         "configFilePaths": [
-          "C:\\Users\\kprice\\AppData\\Roaming\\NuGet\\NuGet.Config",
+          "C:\\Users\\price\\AppData\\Roaming\\NuGet\\NuGet.Config",
           "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config",
           "C:\\Program Files (x86)\\NuGet\\Config\\Xamarin.Offline.config"
         ],
@@ -75,7 +76,7 @@
               "privateAssets": "all"
             }
           },
-          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\3.0.100\\RuntimeIdentifierGraph.json"
+          "runtimeIdentifierGraphPath": "c:\\program files\\dotnet\\sdk\\3.0.100\\RuntimeIdentifierGraph.json"
         }
       }
     }
