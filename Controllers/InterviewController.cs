@@ -47,5 +47,11 @@ namespace ReliasInterviewApi.Controllers
         {
             return _interviewService.GetResponses();
         }
+
+        [HttpPost("questions")]
+        public ActionResult<Question> PostResponse(Question question)
+        {
+            return _interviewService.UpdateQuestion(question);
+        }
     }
 }
