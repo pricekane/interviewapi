@@ -34,12 +34,33 @@ namespace ReliasInterviewApi.Controllers
         }
 
         [HttpGet("candidate/{id}")]
-        public ActionResult<Candidate> GetCandidate(int id)
+        public ActionResult<CandidateModel> GetCandidate(int id)
         {
-            var retVal = _interviewService.GetCandidate(id);
-            if (retVal == null)
+            var candidateEntity = _interviewService.GetCandidate(id);
+            if (candidateEntity == null)
             {
                 return NotFound($"No Candidate of id {id} exists");
+            }
+
+            var retVal = new CandidateModel()
+            {
+                Id = id,
+                FirstName = candidateEntity.FirstName,
+                LastName = candidateEntity.LastName,
+                PositionType = candidateEntity.PositionType,
+                Created = candidateEntity.Created
+            };
+
+            if (candidateEntity.Tests.Any())
+            {
+                retVal.Tests = new List<CandidateTestModel>();
+                foreach (var test in candidateEntity.Tests)
+                {
+                    retVal.Tests.Add(new CandidateTestModel()
+                    {
+                        TestId = test.TestId
+                    });
+                }
             }
 
             return retVal;
