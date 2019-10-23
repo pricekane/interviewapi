@@ -24,8 +24,16 @@ namespace ReliasInterviewApi.Data
             modelBuilder.Entity<User>().ToTable("Users");
             modelBuilder.Entity<Question>().ToTable("Questions");
             modelBuilder.Entity<Response>().ToTable("Responses");
-            modelBuilder.Entity<CandidateTest>().ToTable("CandidateTests");
-            modelBuilder.Entity<CandidateTestQuestion>().ToTable("CandidateTestQuestions");
+            modelBuilder.Entity<CandidateTest>()
+                .ToTable("CandidateTests")
+                .HasMany(i => i.TestQuestions)
+                .WithOne(i => i.Test)
+                .HasForeignKey(i => i.TestId);
+            modelBuilder.Entity<CandidateTestQuestion>()
+                .ToTable("CandidateTestQuestions")
+                .HasOne(i => i.Test)
+                .WithMany(i => i.TestQuestions)
+                .HasForeignKey(i => i.TestId);
 
         }
     }
