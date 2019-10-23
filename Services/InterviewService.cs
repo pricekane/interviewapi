@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Logging;
 using ReliasInterviewApi.Data;
 using ReliasInterviewApi.Models;
@@ -26,7 +27,9 @@ namespace ReliasInterviewApi.Services
 
         public Candidate GetCandidate(int candidateId)
         {
-            return _context.Candidates.FirstOrDefault(i => i.Id == candidateId);
+            return _context.Candidates
+                .Include(i => i.Tests)
+                .FirstOrDefault(i => i.Id == candidateId);
         }
 
         public Candidate CreateCandidate(Candidate candidate)
@@ -104,6 +107,62 @@ namespace ReliasInterviewApi.Services
             return question;
         }
 
+        public CandidateTest GetTest(int testId)
+        {
+            return _context.Tests
+                .Include(i => i.TestQuestions)
+                .FirstOrDefault(i => i.TestId == testId);
+        }
+
+        public CandidateTest CreateTest(CandidateTest test)
+        {
+            _context.Tests.Add(test);
+            _context.SaveChanges();
+            return test;
+        }
+
+        public void AddQuestionToTest(int testId, int questionId)
+        {
+            if (_context.TestQuestions.Any(i => i.TestId == testId && i.QuestionId == questionId))
+            {
+                return;
+            }
+
+            _context.TestQuestions.Add(new CandidateTestQuestion()
+            {
+                QuestionId = questionId,
+                TestId = testId
+            });
+            _context.SaveChanges();
+        }
+
+        public void RemoveQuestionFromTest(int testId, int questionId)
+        {
+            var testQuestion = _context.TestQuestions.FirstOrDefault(i => i.TestId == testId && i.QuestionId == questionId);
+
+            if (testQuestion == null)
+            {
+                return;
+            }
+
+            _context.TestQuestions.Remove(testQuestion);
+            _context.SaveChanges();
+        }
+
+        public bool UpdateTestQuestionAnswer(int testQuestionId, string answer)
+        {
+            var testQuestion = _context.TestQuestions.FirstOrDefault(i => i.TestQuestionsId == testQuestionId);
+
+            if (testQuestion == null)
+            {
+                return false;
+            }
+            
+            testQuestion.Answer = answer;
+            _context.SaveChanges();
+            return true;
+        }
+
         public IEnumerable<Response> GetResponses()
         {
             return _context.Responses;
@@ -121,6 +180,13 @@ namespace ReliasInterviewApi.Services
         Question GetQuestion(int questionId);
         Question CreateQuestion(Question question);
         Question UpdateQuestion(Question question);
+
+        CandidateTest GetTest(int testId);
+        CandidateTest CreateTest(CandidateTest test);
+
+        void AddQuestionToTest(int testId, int questionId);
+        void RemoveQuestionFromTest(int testId, int questionId);
+        bool UpdateTestQuestionAnswer(int testQuestionId, string answer);
 
         IEnumerable<User> GetUsers();
         IEnumerable<Response> GetResponses();

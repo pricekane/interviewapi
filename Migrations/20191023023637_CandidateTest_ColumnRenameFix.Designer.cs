@@ -3,15 +3,17 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using ReliasInterviewApi.Data;
 
 namespace ReliasInterviewApi.Migrations
 {
     [DbContext(typeof(Context))]
-    partial class ContextModelSnapshot : ModelSnapshot
+    [Migration("20191023023637_CandidateTest_ColumnRenameFix")]
+    partial class CandidateTest_ColumnRenameFix
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -51,7 +53,7 @@ namespace ReliasInterviewApi.Migrations
                         .HasColumnType("int")
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
-                    b.Property<int>("CandidateId")
+                    b.Property<int?>("CandidateId")
                         .HasColumnType("int");
 
                     b.HasKey("TestId");
@@ -152,11 +154,9 @@ namespace ReliasInterviewApi.Migrations
 
             modelBuilder.Entity("ReliasInterviewApi.Models.CandidateTest", b =>
                 {
-                    b.HasOne("ReliasInterviewApi.Models.Candidate", "Candidate")
+                    b.HasOne("ReliasInterviewApi.Models.Candidate", null)
                         .WithMany("Tests")
-                        .HasForeignKey("CandidateId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
+                        .HasForeignKey("CandidateId");
                 });
 
             modelBuilder.Entity("ReliasInterviewApi.Models.CandidateTestQuestion", b =>

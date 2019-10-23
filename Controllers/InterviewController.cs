@@ -1,12 +1,14 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Net;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 using ReliasInterviewApi.Data;
 using ReliasInterviewApi.Models;
 using ReliasInterviewApi.Services;
+using ReliasInterviewApi.ViewModels;
 
 namespace ReliasInterviewApi.Controllers
 {
@@ -99,6 +101,51 @@ namespace ReliasInterviewApi.Controllers
             }
 
             return retVal;
+        }
+        #endregion
+
+        #region Test Endpoints
+        [HttpGet("test/{testId}")]
+        public ActionResult<CandidateTest> GetTest(int testId)
+        {
+            var retVal = _interviewService.GetTest(testId);
+            if (retVal == null)
+            {
+                return NotFound("No tests found");
+            }
+
+            return retVal;
+        }
+
+        [HttpPost("test")]
+        public ActionResult<CandidateTest> CreateTest(CandidateTest test)
+        {
+            return _interviewService.CreateTest(test);
+        }
+
+        [HttpPost("test/question")]
+        public ActionResult AddQuestionToTest(TestQuestionLiteModel testQuestion)
+        {
+            _interviewService.AddQuestionToTest(testQuestion.TestId, testQuestion.QuestionId);
+            return StatusCode((int)HttpStatusCode.OK);
+        }
+
+        [HttpDelete("test/question")]
+        public ActionResult RemoveQuestionFromTest(TestQuestionLiteModel testQuestion)
+        {
+            _interviewService.RemoveQuestionFromTest(testQuestion.TestId, testQuestion.QuestionId);
+            return StatusCode((int)HttpStatusCode.OK);
+        }
+
+        [HttpPut("test/answer")]
+        public ActionResult UpdateTestQuestionAnswer(TestQuestionAnswerModel testQuestionAnswer)
+        {
+            if (_interviewService.UpdateTestQuestionAnswer(testQuestionAnswer.TestQuestionId, testQuestionAnswer.Answer))
+            {
+                return StatusCode((int)HttpStatusCode.OK);
+            }
+
+            return BadRequest("Unable to save answer");
         }
         #endregion
 
