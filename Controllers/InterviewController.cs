@@ -151,10 +151,10 @@ namespace ReliasInterviewApi.Controllers
             return StatusCode((int)HttpStatusCode.OK);
         }
 
-        [HttpDelete("test/question")]
-        public ActionResult RemoveQuestionFromTest(TestQuestionLiteModel testQuestion)
+        [HttpDelete("test/{testId}/question/{questionId}")]
+        public ActionResult RemoveQuestionFromTest(int testId, int questionId)
         {
-            _interviewService.RemoveQuestionFromTest(testQuestion.TestId, testQuestion.QuestionId);
+            _interviewService.RemoveQuestionFromTest(testId, questionId);
             return StatusCode((int)HttpStatusCode.OK);
         }
 
