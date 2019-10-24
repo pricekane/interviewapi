@@ -7,7 +7,7 @@ namespace ReliasInterviewApi.ViewModels
 {
     public class TestQuestionModel
     {
-        public int TestQuestionsId { get; set; }
+        public int TestQuestionId { get; set; }
         public string Answer { get; set; }
         public QuestionModel Question { get; set; }
     }

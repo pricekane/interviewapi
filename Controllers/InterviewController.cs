@@ -127,13 +127,43 @@ namespace ReliasInterviewApi.Controllers
 
         #region Test Endpoints
         [HttpGet("test/{testId}")]
-        public ActionResult<CandidateTest> GetTest(int testId)
+        public ActionResult<CandidateTestModel> GetTest(int testId)
         {
-            var retVal = _interviewService.GetTest(testId);
-            if (retVal == null)
+            var testEntity = _interviewService.GetTest(testId);
+
+            if (testEntity == null)
             {
                 return NotFound("No tests found");
             }
+
+            var retVal = new CandidateTestModel()
+            {
+                TestId = testEntity.TestId
+            };
+
+            if (!testEntity.TestQuestions.Any())
+            {
+                return retVal;
+            }
+
+            retVal.TestQuestions = new List<TestQuestionModel>();
+            testEntity.TestQuestions.ForEach(i =>
+            {
+                retVal.TestQuestions.Add(new TestQuestionModel()
+                {
+                    TestQuestionId = i.TestQuestionsId,
+                    Answer = i.Answer,
+                    Question = new QuestionModel()
+                    {
+                        QuestionId = i.QuestionId,
+                        Answer = i.Question.Answer,
+                        Description = i.Question.Description,
+                        Level = i.Question.Level,
+                        Text = i.Question.Text,
+                        Type = i.Question.Type
+                    }
+                });
+            });
 
             return retVal;
         }
