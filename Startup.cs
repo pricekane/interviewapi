@@ -42,7 +42,7 @@ namespace ReliasInterviewApi
                     });
             });
 
-            services.AddControllers();
+            services.AddControllers().AddNewtonsoftJson();
             services.AddSwaggerGen(c =>
             {
                 c.SwaggerDoc("v1", new OpenApiInfo { Title = "Relias Interview API", Version = "v1" });
