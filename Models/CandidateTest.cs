@@ -14,6 +14,7 @@ namespace ReliasInterviewApi.Models
         public string Name { get; set; }
 
         public DateTime Created { get; set; }
+        public bool Finished { get; set; }
 
         public Candidate Candidate { get; set; }
         public List<CandidateTestQuestion> TestQuestions { get; set; }

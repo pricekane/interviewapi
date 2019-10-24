@@ -96,7 +96,7 @@ namespace ReliasInterviewApi.Controllers
         }
 
         [HttpPost("questions")]
-        public ActionResult<Question> PostQuestion(Question question)
+        public ActionResult<QuestionModel> PostQuestion(QuestionModel question)
         {
             var retVal = _interviewService.CreateQuestion(question);
 
@@ -105,11 +105,11 @@ namespace ReliasInterviewApi.Controllers
                 return BadRequest("Question already exists");
             }
 
-            return retVal;
+            return retVal.CreateModel();
         }
 
         [HttpPut("questions")]
-        public ActionResult<Question> PutQuestion(Question question)
+        public ActionResult<QuestionModel> PutQuestion(QuestionModel question)
         {
             var retVal = _interviewService.UpdateQuestion(question);
 
@@ -118,7 +118,7 @@ namespace ReliasInterviewApi.Controllers
                 return BadRequest("Question does not exist");
             }
 
-            return retVal;
+            return retVal.CreateModel();
         }
         #endregion
 
@@ -152,9 +152,9 @@ namespace ReliasInterviewApi.Controllers
                         QuestionId = i.QuestionId,
                         Answer = i.Question.Answer,
                         Description = i.Question.Description,
-                        Level = i.Question.Level,
+                        Level = (int)i.Question.Level,
                         Text = i.Question.Text,
-                        Type = i.Question.Type
+                        Type = (int)i.Question.Type
                     }
                 });
             });
@@ -192,6 +192,20 @@ namespace ReliasInterviewApi.Controllers
 
             return BadRequest("Unable to save answer");
         }
+
+        [HttpPut("test/{testId}/finish")]
+        public ActionResult FinishTest(int testId)
+        {
+            var success = _interviewService.FinishTest(testId);
+
+            if (success)
+            {
+                return StatusCode((int) HttpStatusCode.OK);
+            }
+
+            return NotFound("No such test");
+        }
+
         #endregion
 
         [HttpGet("users")]

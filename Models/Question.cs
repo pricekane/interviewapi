@@ -1,4 +1,5 @@
 ﻿using System.ComponentModel.DataAnnotations;
+using ReliasInterviewApi.ViewModels;
 
 namespace ReliasInterviewApi.Models
 {
@@ -11,9 +12,18 @@ namespace ReliasInterviewApi.Models
         public Level Level { get; set; }
         public string? Answer { get; set; }
         public string Description { get; set; }
+
+        public QuestionModel CreateModel()
+        {
+            return new QuestionModel()
+            {
+                QuestionId = QuestionId,
+                Answer = Answer,
+                Description = Description,
+                Level = (int)Level,
+                Type = (int)Type,
+                Text = Text
+            };
+        }
     }
 }
-
-public enum Type { ShortAnswer, MultipleChoice }
-public enum Level { Junior, Middle, Senior }
-

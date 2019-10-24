@@ -7,6 +7,8 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Logging;
 using ReliasInterviewApi.Data;
 using ReliasInterviewApi.Models;
+using ReliasInterviewApi.ViewModels;
+using Type = ReliasInterviewApi.Models.Type;
 
 namespace ReliasInterviewApi.Services
 {
@@ -77,19 +79,21 @@ namespace ReliasInterviewApi.Services
             return _context.Questions.FirstOrDefault(i => i.QuestionId == questionId);
         }
 
-        public Question CreateQuestion(Question question)
+        public Question CreateQuestion(QuestionModel question)
         {
             if (_context.Questions.Any(i => i.Text == question.Text))
             {
                 return null;
             }
 
-            _context.Questions.Add(question);
+            var newEntity = question.CreateEntity();
+            _context.Questions.Add(newEntity);
             _context.SaveChanges();
-            return question;
+
+            return newEntity;
         }
 
-        public Question UpdateQuestion(Question question)
+        public Question UpdateQuestion(QuestionModel question)
         {
             var existingQuestion= _context.Questions.FirstOrDefault(i => i.QuestionId == question.QuestionId);
 
@@ -100,12 +104,12 @@ namespace ReliasInterviewApi.Services
 
             existingQuestion.Answer = question.Answer;
             existingQuestion.Description = question.Description;
-            existingQuestion.Level = question.Level;
-            existingQuestion.Type = question.Type;
+            existingQuestion.Level = (Level)question.Level;
+            existingQuestion.Type = (Type)question.Type;
             existingQuestion.Text = question.Text;
 
             _context.SaveChanges();
-            return question;
+            return existingQuestion;
         }
 
         public CandidateTest GetTest(int testId)
@@ -166,6 +170,19 @@ namespace ReliasInterviewApi.Services
             return true;
         }
 
+        public bool FinishTest(int testId)
+        {
+            var test = _context.Tests.FirstOrDefault(i => i.TestId == testId);
+            if (test == null)
+            {
+                return false;
+            }
+
+            test.Finished = true;
+            _context.SaveChanges();
+            return true;
+        }
+
         public IEnumerable<Response> GetResponses()
         {
             return _context.Responses;
@@ -181,8 +198,8 @@ namespace ReliasInterviewApi.Services
 
         IEnumerable<Question> GetQuestions();
         Question GetQuestion(int questionId);
-        Question CreateQuestion(Question question);
-        Question UpdateQuestion(Question question);
+        Question CreateQuestion(QuestionModel question);
+        Question UpdateQuestion(QuestionModel question);
 
         CandidateTest GetTest(int testId);
         CandidateTest CreateTest(CandidateTest test);
@@ -190,6 +207,7 @@ namespace ReliasInterviewApi.Services
         void AddQuestionToTest(int testId, int questionId);
         void RemoveQuestionFromTest(int testId, int questionId);
         bool UpdateTestQuestionAnswer(int testQuestionId, string answer);
+        bool FinishTest(int testId);
 
         IEnumerable<User> GetUsers();
         IEnumerable<Response> GetResponses();
