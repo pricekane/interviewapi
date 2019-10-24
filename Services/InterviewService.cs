@@ -117,6 +117,7 @@ namespace ReliasInterviewApi.Services
 
         public CandidateTest CreateTest(CandidateTest test)
         {
+            test.Created = DateTime.UtcNow;
             _context.Tests.Add(test);
             _context.SaveChanges();
             return test;
