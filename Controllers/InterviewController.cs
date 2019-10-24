@@ -138,7 +138,9 @@ namespace ReliasInterviewApi.Controllers
 
             var retVal = new CandidateTestModel()
             {
-                TestId = testEntity.TestId
+                TestId = testEntity.TestId,
+                Name = testEntity.Name,
+                Created = testEntity.Created                
             };
 
             if (!testEntity.TestQuestions.Any())
