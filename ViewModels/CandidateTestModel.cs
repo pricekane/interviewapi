@@ -17,6 +17,7 @@ namespace ReliasInterviewApi.ViewModels
         {
             TestId = testEntity.TestId;
             Name = testEntity.Name;
+            CandidateId = testEntity.CandidateId;
             Created = testEntity.Created;
             HasQuestions = testEntity.TestQuestions.Any();
         }
@@ -25,6 +26,7 @@ namespace ReliasInterviewApi.ViewModels
         public string Name { get; set; }
         public DateTime Created { get; set; }
         public bool? HasQuestions { get; set; }
+        public int CandidateId { get; set; }
         public List<TestQuestionModel> TestQuestions { get; set; }
     }
 }
