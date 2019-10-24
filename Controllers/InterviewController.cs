@@ -56,10 +56,7 @@ namespace ReliasInterviewApi.Controllers
                 retVal.Tests = new List<CandidateTestModel>();
                 foreach (var test in candidateEntity.Tests)
                 {
-                    retVal.Tests.Add(new CandidateTestModel()
-                    {
-                        TestId = test.TestId
-                    });
+                    retVal.Tests.Add(new CandidateTestModel(test));
                 }
             }
 
@@ -136,12 +133,7 @@ namespace ReliasInterviewApi.Controllers
                 return NotFound("No tests found");
             }
 
-            var retVal = new CandidateTestModel()
-            {
-                TestId = testEntity.TestId,
-                Name = testEntity.Name,
-                Created = testEntity.Created                
-            };
+            var retVal = new CandidateTestModel(testEntity);
 
             if (!testEntity.TestQuestions.Any())
             {
