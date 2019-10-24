@@ -29,6 +29,7 @@ namespace ReliasInterviewApi.Services
         {
             return _context.Candidates
                 .Include(i => i.Tests)
+                .Include("Tests.TestQuestions")
                 .FirstOrDefault(i => i.Id == candidateId);
         }
 
